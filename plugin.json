@@ -1,0 +1,30 @@
+{
+  "pluginName": "汇率换算",
+  "description": "简单易用，提供多种货币转换，enjoy💖",
+  "author": "HandsomeWalker",
+  "development": {
+    "main": "http://localhost:8000"
+  },
+  "main": "index.html",
+  "version": "1.0.0",
+  "logo": "logo.png",
+  "preload": "preload.js",
+  "features": [
+    {
+      "code": "hl",
+      "explain": "汇率换算",
+      "cmds": ["汇率"]
+    },
+    {
+      "code": "fast",
+      "explain": "快速汇率换算",
+      "cmds": [
+        {
+          "type": "regex",
+          "label": "快速汇率换算",
+          "match": "/^hl([1-9][\\d]*|0)(\\.[\\d]+)?$/"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,866 @@
+[
+  {
+    "label": "人民币(CNY)",
+    "value": "CNY:CUR"
+  },
+  {
+    "label": "加元(CAD)",
+    "value": "CAD:CUR"
+  },
+  {
+    "label": "美元(USD)",
+    "value": "USD:CUR"
+  },
+  {
+    "label": "港币(HKD)",
+    "value": "HKD:CUR"
+  },
+  {
+    "label": "台币(TWD)",
+    "value": "TWD:CUR"
+  },
+  {
+    "label": "澳元(AUD)",
+    "value": "AUD:CUR"
+  },
+  {
+    "label": "比利时法郎(BEF)",
+    "value": "BEF:CUR"
+  },
+  {
+    "label": "英镑(GBP)",
+    "value": "GBP:CUR"
+  },
+  {
+    "label": "丹麦克朗(DKK)",
+    "value": "DKK:CUR"
+  },
+  {
+    "label": "荷兰盾(NLG)",
+    "value": "NLG:CUR"
+  },
+  {
+    "label": "欧元(EUR)",
+    "value": "EUR:CUR"
+  },
+  {
+    "label": "法国法郎(FRF)",
+    "value": "FRF:CUR"
+  },
+  {
+    "label": "德国马克(DEM)",
+    "value": "DEM:CUR"
+  },
+  {
+    "label": "意大利里拉(ITL)",
+    "value": "ITL:CUR"
+  },
+  {
+    "label": "日元(JPY)",
+    "value": "JPY:CUR"
+  },
+  {
+    "label": "瑞士法郎(CHF)",
+    "value": "CHF:CUR"
+  },
+  {
+    "label": "新加坡元(SGD)",
+    "value": "SGD:CUR"
+  },
+  {
+    "label": "韩国元(KRW)",
+    "value": "KRW:CUR"
+  },
+  {
+    "label": "澳门元(MOP)",
+    "value": "MOP:CUR"
+  },
+  {
+    "label": "瑞典克朗(SEK)",
+    "value": "SEK:CUR"
+  },
+  {
+    "label": "菲律宾比索(PHP)",
+    "value": "PHP:CUR"
+  },
+  {
+    "label": "挪威克朗(NOK)",
+    "value": "NOK:CUR"
+  },
+  {
+    "label": "泰国铢(THB)",
+    "value": "THB:CUR"
+  },
+  {
+    "label": "阿富汗尼(AFN)",
+    "value": "AFN:CUR"
+  },
+  {
+    "label": "阿尔巴尼亚列克(ALL)",
+    "value": "ALL:CUR"
+  },
+  {
+    "label": "阿尔及利亚第纳尔(DZD)",
+    "value": "DZD:CUR"
+  },
+  {
+    "label": "安道尔西班牙银币(ADP)",
+    "value": "ADP:CUR"
+  },
+  {
+    "label": "安道尔法郎(FRF)",
+    "value": "FRF:CUR"
+  },
+  {
+    "label": "安哥拉宽扎(AOA)",
+    "value": "AOA:CUR"
+  },
+  {
+    "label": "阿根廷比索(ARS)",
+    "value": "ARS:CUR"
+  },
+  {
+    "label": "亚美尼亚打兰(AMD)",
+    "value": "AMD:CUR"
+  },
+  {
+    "label": "阿鲁巴弗罗林(AWG)",
+    "value": "AWG:CUR"
+  },
+  {
+    "label": "澳大利亚元(AUD)",
+    "value": "AUD:CUR"
+  },
+  {
+    "label": "奥地利先令(ATS)",
+    "value": "ATS:CUR"
+  },
+  {
+    "label": "阿塞拜疆曼纳特(AZN)",
+    "value": "AZN:CUR"
+  },
+  {
+    "label": "亚速尔群岛埃斯库多(PTE)",
+    "value": "PTE:CUR"
+  },
+  {
+    "label": "巴哈马元(BSD)",
+    "value": "BSD:CUR"
+  },
+  {
+    "label": "巴林第纳尔(BHD)",
+    "value": "BHD:CUR"
+  },
+  {
+    "label": "巴利阿里群岛比塞塔(ESP)",
+    "value": "ESP:CUR"
+  },
+  {
+    "label": "孟加拉塔卡(BDT)",
+    "value": "BDT:CUR"
+  },
+  {
+    "label": "巴巴多斯元(BBD)",
+    "value": "BBD:CUR"
+  },
+  {
+    "label": "白俄罗斯卢布(BYR)",
+    "value": "BYR:CUR"
+  },
+  {
+    "label": "比利时法郎(BEF)",
+    "value": "BEF:CUR"
+  },
+  {
+    "label": "伯利兹元(BZD)",
+    "value": "BZD:CUR"
+  },
+  {
+    "label": "贝宁法郎(XOF)",
+    "value": "XOF:CUR"
+  },
+  {
+    "label": "百慕大元(BMD)",
+    "value": "BMD:CUR"
+  },
+  {
+    "label": "不丹努扎姆(BTN)",
+    "value": "BTN:CUR"
+  },
+  {
+    "label": "玻利维亚币(BOB)",
+    "value": "BOB:CUR"
+  },
+  {
+    "label": "波斯尼亚-黑塞哥维那自由兑现货币(BAM)",
+    "value": "BAM:CUR"
+  },
+  {
+    "label": "博茨瓦纳普拉(BWP)",
+    "value": "BWP:CUR"
+  },
+  {
+    "label": "巴西雷亚尔(BRL)",
+    "value": "BRL:CUR"
+  },
+  {
+    "label": "英镑(GBP)",
+    "value": "GBP:CUR"
+  },
+  {
+    "label": "文莱币(BND)",
+    "value": "BND:CUR"
+  },
+  {
+    "label": "保加利亚列弗(BGN)",
+    "value": "BGN:CUR"
+  },
+  {
+    "label": "塞内加尔非共体法郎(XOF)",
+    "value": "XOF:CUR"
+  },
+  {
+    "label": "布隆迪法郎(BIF)",
+    "value": "BIF:CUR"
+  },
+  {
+    "label": "柬埔寨瑞尔(KHR)",
+    "value": "KHR:CUR"
+  },
+  {
+    "label": "中非法郎(XAF)",
+    "value": "XAF:CUR"
+  },
+  {
+    "label": "加元(CAD)",
+    "value": "CAD:CUR"
+  },
+  {
+    "label": "加那利群岛比塞塔(ESP)",
+    "value": "ESP:CUR"
+  },
+  {
+    "label": "佛得角埃斯库多(CVE)",
+    "value": "CVE:CUR"
+  },
+  {
+    "label": "开曼群岛币(KYD)",
+    "value": "KYD:CUR"
+  },
+  {
+    "label": "多哥非共体法郎(XOF)",
+    "value": "XOF:CUR"
+  },
+  {
+    "label": "非洲法郎(XAF)",
+    "value": "XAF:CUR"
+  },
+  {
+    "label": "智利比索(CLP)",
+    "value": "CLP:CUR"
+  },
+  {
+    "label": "哥伦比亚比索(COP)",
+    "value": "COP:CUR"
+  },
+  {
+    "label": "科摩罗法郎(KMF)",
+    "value": "KMF:CUR"
+  },
+  {
+    "label": "西非法郎(XAF)",
+    "value": "XAF:CUR"
+  },
+  {
+    "label": "哥斯达黎加科朗(CRC)",
+    "value": "CRC:CUR"
+  },
+  {
+    "label": "克罗地亚库纳(HRK)",
+    "value": "HRK:CUR"
+  },
+  {
+    "label": "古巴比索(CUP)",
+    "value": "CUP:CUR"
+  },
+  {
+    "label": "塞浦路斯镑(CYP)",
+    "value": "CYP:CUR"
+  },
+  {
+    "label": "捷克克朗(CZK)",
+    "value": "CZK:CUR"
+  },
+  {
+    "label": "刚果法郎(CDF)",
+    "value": "CDF:CUR"
+  },
+  {
+    "label": "丹麦克朗(DKK)",
+    "value": "DKK:CUR"
+  },
+  {
+    "label": "吉布提法郎(DJF)",
+    "value": "DJF:CUR"
+  },
+  {
+    "label": "多米尼加比索(DOP)",
+    "value": "DOP:CUR"
+  },
+  {
+    "label": "厄瓜多尔苏克雷(ECS)",
+    "value": "ECS:CUR"
+  },
+  {
+    "label": "埃及镑(EGP)",
+    "value": "EGP:CUR"
+  },
+  {
+    "label": "萨尔瓦多科朗(SVC)",
+    "value": "SVC:CUR"
+  },
+  {
+    "label": "厄立特里亚纳克法(ERN)",
+    "value": "ERN:CUR"
+  },
+  {
+    "label": "爱沙尼亚克鲁恩(EEK)",
+    "value": "EEK:CUR"
+  },
+  {
+    "label": "埃塞俄比亚比尔(ETB)",
+    "value": "ETB:CUR"
+  },
+  {
+    "label": "欧元(旧)(XEU)",
+    "value": "XEU:CUR"
+  },
+  {
+    "label": "欧元(EUR)",
+    "value": "EUR:CUR"
+  },
+  {
+    "label": "斐济元(FJD)",
+    "value": "FJD:CUR"
+  },
+  {
+    "label": "芬兰马克(FIM)",
+    "value": "FIM:CUR"
+  },
+  {
+    "label": "法国法郎(FRF)",
+    "value": "FRF:CUR"
+  },
+  {
+    "label": "法国太平洋法郎 (XPF)",
+    "value": "XPF:CUR"
+  },
+  {
+    "label": "冈比亚达拉西(GMD)",
+    "value": "GMD:CUR"
+  },
+  {
+    "label": "乔治亚拉里(GEL)",
+    "value": "GEL:CUR"
+  },
+  {
+    "label": "德国马克(DEM)",
+    "value": "DEM:CUR"
+  },
+  {
+    "label": "新加纳塞第(GHS)",
+    "value": "GHS:CUR"
+  },
+  {
+    "label": "加纳塞第(GHC)",
+    "value": "GHC:CUR"
+  },
+  {
+    "label": "直布罗陀镑(GIP)",
+    "value": "GIP:CUR"
+  },
+  {
+    "label": "盎司黄金(XAU)",
+    "value": "XAU:CUR"
+  },
+  {
+    "label": "希腊德拉克马(GRD)",
+    "value": "GRD:CUR"
+  },
+  {
+    "label": "丹麦克郎(DKK)",
+    "value": "DKK:CUR"
+  },
+  {
+    "label": "格林纳达东加勒比元(XCD)",
+    "value": "XCD:CUR"
+  },
+  {
+    "label": "安道尔法郎(FRF)",
+    "value": "FRF:CUR"
+  },
+  {
+    "label": "危地马拉格查尔(GTQ)",
+    "value": "GTQ:CUR"
+  },
+  {
+    "label": "几内亚法郎(GNF)",
+    "value": "GNF:CUR"
+  },
+  {
+    "label": "圭亚那元(GYD)",
+    "value": "GYD:CUR"
+  },
+  {
+    "label": "海地古德(HTG)",
+    "value": "HTG:CUR"
+  },
+  {
+    "label": "洪都拉斯伦皮拉(HNL)",
+    "value": "HNL:CUR"
+  },
+  {
+    "label": "港元(HKD)",
+    "value": "HKD:CUR"
+  },
+  {
+    "label": "匈牙利福林(HUF)",
+    "value": "HUF:CUR"
+  },
+  {
+    "label": "冰岛克郎(ISK)",
+    "value": "ISK:CUR"
+  },
+  {
+    "label": "特别提款权(SDR)",
+    "value": "SDR:CUR"
+  },
+  {
+    "label": "印度卢比(INR)",
+    "value": "INR:CUR"
+  },
+  {
+    "label": "印尼盾-印尼卢比(IDR)",
+    "value": "IDR:CUR"
+  },
+  {
+    "label": "伊朗里亚尔(IRR)",
+    "value": "IRR:CUR"
+  },
+  {
+    "label": "伊拉克第纳尔(IQD)",
+    "value": "IQD:CUR"
+  },
+  {
+    "label": "爱尔兰镑(IEP)",
+    "value": "IEP:CUR"
+  },
+  {
+    "label": "以色列新锡克尔(ILS)",
+    "value": "ILS:CUR"
+  },
+  {
+    "label": "意大利里拉(ITL)",
+    "value": "ITL:CUR"
+  },
+  {
+    "label": "牙买加元(JMD)",
+    "value": "JMD:CUR"
+  },
+  {
+    "label": "日元(JPY)",
+    "value": "JPY:CUR"
+  },
+  {
+    "label": "约旦第纳尔(JOD)",
+    "value": "JOD:CUR"
+  },
+  {
+    "label": "哈萨克斯坦坚戈(KZT)",
+    "value": "KZT:CUR"
+  },
+  {
+    "label": "肯尼亚先令(KES)",
+    "value": "KES:CUR"
+  },
+  {
+    "label": "科威特第纳尔(KWD)",
+    "value": "KWD:CUR"
+  },
+  {
+    "label": "吉尔吉斯斯坦索姆(KGS)",
+    "value": "KGS:CUR"
+  },
+  {
+    "label": "老挝基普(LAK)",
+    "value": "LAK:CUR"
+  },
+  {
+    "label": "拉脱维亚拉茨(LVL)",
+    "value": "LVL:CUR"
+  },
+  {
+    "label": "黎巴嫩镑(LBP)",
+    "value": "LBP:CUR"
+  },
+  {
+    "label": "莱索托洛蒂(LSL)",
+    "value": "LSL:CUR"
+  },
+  {
+    "label": "利比里亚元(LRD)",
+    "value": "LRD:CUR"
+  },
+  {
+    "label": "利比亚第纳尔(LYD)",
+    "value": "LYD:CUR"
+  },
+  {
+    "label": "瑞士法郎(CHF)",
+    "value": "CHF:CUR"
+  },
+  {
+    "label": "立陶宛立特(LTL)",
+    "value": "LTL:CUR"
+  },
+  {
+    "label": "卢森堡法郎(LUF)",
+    "value": "LUF:CUR"
+  },
+  {
+    "label": "澳门元(MOP)",
+    "value": "MOP:CUR"
+  },
+  {
+    "label": "马其顿第纳尔(MKD)",
+    "value": "MKD:CUR"
+  },
+  {
+    "label": "马达加斯加阿里亚里(MGA)",
+    "value": "MGA:CUR"
+  },
+  {
+    "label": "马拉维克瓦查(MWK)",
+    "value": "MWK:CUR"
+  },
+  {
+    "label": "马来西亚林吉特(MYR)",
+    "value": "MYR:CUR"
+  },
+  {
+    "label": "马尔代夫罗非亚(MVR)",
+    "value": "MVR:CUR"
+  },
+  {
+    "label": "马耳他里拉(MTL)",
+    "value": "MTL:CUR"
+  },
+  {
+    "label": "马提尼克法郎(FRF)",
+    "value": "FRF:CUR"
+  },
+  {
+    "label": "毛里塔尼亚乌吉亚(MRO)",
+    "value": "MRO:CUR"
+  },
+  {
+    "label": "毛里求斯卢比(MUR)",
+    "value": "MUR:CUR"
+  },
+  {
+    "label": "墨西哥比索(MXN)",
+    "value": "MXN:CUR"
+  },
+  {
+    "label": "沙特阿拉伯里亚尔(SAR)",
+    "value": "SAR:CUR"
+  },
+  {
+    "label": "摩尔多瓦列伊(MDL)",
+    "value": "MDL:CUR"
+  },
+  {
+    "label": "摩纳哥法郎(EUR)",
+    "value": "EUR:CUR"
+  },
+  {
+    "label": "蒙古图格里克(MNT)",
+    "value": "MNT:CUR"
+  },
+  {
+    "label": "摩洛哥迪拉姆(MAD)",
+    "value": "MAD:CUR"
+  },
+  {
+    "label": "莫桑比克梅蒂卡尔(MZN)",
+    "value": "MZN:CUR"
+  },
+  {
+    "label": "莫桑比克美提卡 (MZM)",
+    "value": "MZM:CUR"
+  },
+  {
+    "label": "缅元(MMK)",
+    "value": "MMK:CUR"
+  },
+  {
+    "label": "纳米比亚元(NAD)",
+    "value": "NAD:CUR"
+  },
+  {
+    "label": "尼泊尔卢比(NPR)",
+    "value": "NPR:CUR"
+  },
+  {
+    "label": "安第列斯群岛盾(ANG)",
+    "value": "ANG:CUR"
+  },
+  {
+    "label": "荷兰盾(NLG)",
+    "value": "NLG:CUR"
+  },
+  {
+    "label": "尼加拉瓜科多巴(NIO)",
+    "value": "NIO:CUR"
+  },
+  {
+    "label": "尼日利亚奈拉(NGN)",
+    "value": "NGN:CUR"
+  },
+  {
+    "label": "朝鲜元(KPW)",
+    "value": "KPW:CUR"
+  },
+  {
+    "label": "挪威克郎(NOK)",
+    "value": "NOK:CUR"
+  },
+  {
+    "label": "阿曼里亚尔(OMR)",
+    "value": "OMR:CUR"
+  },
+  {
+    "label": "巴基斯坦卢比(PKR)",
+    "value": "PKR:CUR"
+  },
+  {
+    "label": "巴拿马巴波亚(PAB)",
+    "value": "PAB:CUR"
+  },
+  {
+    "label": "巴布亚新几内亚基那(PGK)",
+    "value": "PGK:CUR"
+  },
+  {
+    "label": "巴拉圭瓜尼(PYG)",
+    "value": "PYG:CUR"
+  },
+  {
+    "label": "秘鲁新索尔(PEN)",
+    "value": "PEN:CUR"
+  },
+  {
+    "label": "菲律宾比索(PHP)",
+    "value": "PHP:CUR"
+  },
+  {
+    "label": "波兰兹罗提(PLN)",
+    "value": "PLN:CUR"
+  },
+  {
+    "label": "葡萄牙埃斯库多(PTE)",
+    "value": "PTE:CUR"
+  },
+  {
+    "label": "卡塔尔里亚尔(QAR)",
+    "value": "QAR:CUR"
+  },
+  {
+    "label": "罗马尼亚新列伊(RON)",
+    "value": "RON:CUR"
+  },
+  {
+    "label": "罗马尼亚列伊(ROL)",
+    "value": "ROL:CUR"
+  },
+  {
+    "label": "俄罗斯卢布(RUB)",
+    "value": "RUB:CUR"
+  },
+  {
+    "label": "卢旺达法郎(RWF)",
+    "value": "RWF:CUR"
+  },
+  {
+    "label": "圣多美和普林西比多布拉(STD)",
+    "value": "STD:CUR"
+  },
+  {
+    "label": "沙特阿拉伯里亚尔(SAR)",
+    "value": "SAR:CUR"
+  },
+  {
+    "label": "赛尔维亚第纳尔(RSD)",
+    "value": "RSD:CUR"
+  },
+  {
+    "label": "塞舌尔卢比(SCR)",
+    "value": "SCR:CUR"
+  },
+  {
+    "label": "塞拉里昂利昂(SLL)",
+    "value": "SLL:CUR"
+  },
+  {
+    "label": "新加坡元(SGD)",
+    "value": "SGD:CUR"
+  },
+  {
+    "label": "斯洛伐克克朗(SKK)",
+    "value": "SKK:CUR"
+  },
+  {
+    "label": "斯洛文尼亚托拉尔(SIT)",
+    "value": "SIT:CUR"
+  },
+  {
+    "label": "所罗门元(SBD)",
+    "value": "SBD:CUR"
+  },
+  {
+    "label": "索马里先令(SOS)",
+    "value": "SOS:CUR"
+  },
+  {
+    "label": "南非兰特(ZAR)",
+    "value": "ZAR:CUR"
+  },
+  {
+    "label": "韩元(KRW)",
+    "value": "KRW:CUR"
+  },
+  {
+    "label": "斯里兰卡卢比(LKR)",
+    "value": "LKR:CUR"
+  },
+  {
+    "label": "圣赫勒拿群岛磅(SHP)",
+    "value": "SHP:CUR"
+  },
+  {
+    "label": "苏丹镑(SDG)",
+    "value": "SDG:CUR"
+  },
+  {
+    "label": "苏里南元(SRD)",
+    "value": "SRD:CUR"
+  },
+  {
+    "label": "苏里南盾(SRG)",
+    "value": "SRG:CUR"
+  },
+  {
+    "label": "斯威士兰里兰吉尼(SZL)",
+    "value": "SZL:CUR"
+  },
+  {
+    "label": "瑞典克朗(SEK)",
+    "value": "SEK:CUR"
+  },
+  {
+    "label": "瑞士法郎(CHF)",
+    "value": "CHF:CUR"
+  },
+  {
+    "label": "叙利亚磅(SYP)",
+    "value": "SYP:CUR"
+  },
+  {
+    "label": "台币(TWD)",
+    "value": "TWD:CUR"
+  },
+  {
+    "label": "塔吉克斯坦索莫尼(TJS)",
+    "value": "TJS:CUR"
+  },
+  {
+    "label": "坦桑尼亚先令(TZS)",
+    "value": "TZS:CUR"
+  },
+  {
+    "label": "泰铢(THB)",
+    "value": "THB:CUR"
+  },
+  {
+    "label": "新西兰元(NZD)",
+    "value": "NZD:CUR"
+  },
+  {
+    "label": "汤加潘加(TOP)",
+    "value": "TOP:CUR"
+  },
+  {
+    "label": "特立尼达多巴哥元(TTD)",
+    "value": "TTD:CUR"
+  },
+  {
+    "label": "突尼斯第纳尔(TND)",
+    "value": "TND:CUR"
+  },
+  {
+    "label": "土耳其新里拉(TRY)",
+    "value": "TRY:CUR"
+  },
+  {
+    "label": "土耳其里拉(TRL)",
+    "value": "TRL:CUR"
+  },
+  {
+    "label": "土库曼斯坦马纳特(TMM)",
+    "value": "TMM:CUR"
+  },
+  {
+    "label": "阿联酋迪拉姆(AED)",
+    "value": "AED:CUR"
+  },
+  {
+    "label": "乌干达先令(UGX)",
+    "value": "UGX:CUR"
+  },
+  {
+    "label": "乌克兰赫夫米(UAH)",
+    "value": "UAH:CUR"
+  },
+  {
+    "label": "乌拉圭比索(UYU)",
+    "value": "UYU:CUR"
+  },
+  {
+    "label": "乌兹别克斯坦苏姆(UZS)",
+    "value": "UZS:CUR"
+  },
+  {
+    "label": "瓦努阿图瓦图(VUV)",
+    "value": "VUV:CUR"
+  },
+  {
+    "label": "委内瑞拉博利瓦(VEB)",
+    "value": "VEB:CUR"
+  },
+  {
+    "label": "越南盾(VND)",
+    "value": "VND:CUR"
+  },
+  {
+    "label": "也门里亚尔(YER)",
+    "value": "YER:CUR"
+  },
+  {
+    "label": "赞比亚克瓦查(ZMK)",
+    "value": "ZMK:CUR"
+  },
+  {
+    "label": "津巴布韦元(ZWD)",
+    "value": "ZWD:CUR"
+  }
+]
