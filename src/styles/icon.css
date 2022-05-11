@@ -597,7 +597,7 @@
 .icon-16-zm,
 .icon-16-zrx,
 .icon-16-zw {
-  background-image: url(../images/sprites/16.png);
+
   width: 16px;
   height: 16px
 }
@@ -1799,7 +1799,7 @@
 }
 
 .icon-16-cr {
-  background-image: url(../images/sprites/16.png);
+
   background-position: -192px -96px;
   width: 16px;
   height: 16px
@@ -3566,7 +3566,7 @@
 .icon-24-zm,
 .icon-24-zrx,
 .icon-24-zw {
-  background-image: url(../images/sprites/24.png);
+
   width: 24px;
   height: 24px
 }
@@ -4692,7 +4692,7 @@
 }
 
 .icon-24-ec {
-  background-image: url(../images/sprites/24.png);
+
   background-position: -288px -24px;
   width: 24px;
   height: 24px
@@ -6383,7 +6383,7 @@
 .icon-48-zm,
 .icon-48-zrx,
 .icon-48-zw {
-  background-image: url(../images/sprites/48.png);
+
   width: 48px;
   height: 48px
 }
@@ -7509,7 +7509,7 @@
 }
 
 .icon-48-ec {
-  background-image: url(../images/sprites/48.png);
+
   background-position: -576px -48px;
   width: 48px;
   height: 48px

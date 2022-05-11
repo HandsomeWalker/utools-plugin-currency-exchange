@@ -1,13 +1,27 @@
+import '@/styles/icon.css';
+import iconImg from '@/assets/24.png';
 import styles from './index.less';
 import currency from '@/assets/currency.json';
 import useRateScript from '@/hooks/useRateScript';
-import { Select, Space, Spin, message, Button, List, InputNumber } from 'antd';
-import { ReloadOutlined, PlusOutlined } from '@ant-design/icons';
-import { useState } from 'react';
+import {
+  Select,
+  Space,
+  Spin,
+  message,
+  Button,
+  List,
+  InputNumber,
+  Avatar,
+} from 'antd';
+import { ReloadOutlined, PlusOutlined, DeleteFilled } from '@ant-design/icons';
+import { useState, useCallback } from 'react';
+import { getIconClassName, simpleDeepCopy } from '@/utils';
+import { multiply, divide, fix } from 'mathjs';
 
 interface ListItemProps {
-  icon: React.ReactNode;
+  iso: string;
   title: string;
+  value: number;
 }
 
 const options = currency.map((item, idx) => ({ ...item, key: idx }));
@@ -16,11 +30,13 @@ export default function IndexPage() {
   const [list, setList] = useState<ListItemProps[]>([
     {
       title: '人名币(CNY)',
-      icon: null,
+      iso: 'CNY:CUR',
+      value: 0,
     },
     {
       title: '美元(USD)',
-      icon: null,
+      iso: 'USD:CUR',
+      value: 0,
     },
   ]);
 
@@ -34,6 +50,29 @@ export default function IndexPage() {
     },
   });
 
+  const onInputNumberChange = useCallback(
+    (value, iso) => {
+      if (value === null) {
+        return;
+      }
+      let temp = simpleDeepCopy(list);
+      for (const item of temp) {
+        if (item.iso === iso) {
+          item.value = value;
+        } else {
+          item.value = fix(
+            divide(multiply(price[item.iso], value), price[iso]) as number,
+            2,
+          );
+        }
+      }
+      setList(temp);
+    },
+    [price],
+  );
+
+  const onAddClick = useCallback(() => {}, []);
+
   return (
     <Spin spinning={loading}>
       <Space
@@ -46,28 +85,53 @@ export default function IndexPage() {
           <Button type="primary" icon={<ReloadOutlined />} onClick={run}>
             刷新
           </Button>
-          <Button type="primary" icon={<PlusOutlined />} onClick={run}>
-            增加货币
-          </Button>
+          <div>
+            汇率计算公式：（银行平均卖出价+银行平均买入价+中国人民银行基准价）/
+            3
+          </div>
         </Space>
-        <Select defaultValue="CNY:CUR" options={options} />
         <List
           size="large"
           header={
-            <div>
-              汇率计算公式：（银行平均卖出价+银行平均买入价+中国人民银行基准价）/
-              3
-            </div>
+            <>
+              <Select defaultValue="CNY:CUR" options={options} />
+              <Button type="primary" icon={<PlusOutlined />} onClick={run}>
+                增加货币
+              </Button>
+            </>
           }
           bordered
           dataSource={list}
-          renderItem={(item) => (
+          renderItem={(item, idx) => (
             <List.Item>
+              <List.Item.Meta
+                avatar={
+                  <Avatar
+                    style={{ backgroundColor: '#ffffff' }}
+                    shape="square"
+                    size={24}
+                    icon={
+                      <div
+                        className={getIconClassName(item.iso, 24)}
+                        style={{ backgroundImage: `url(${iconImg})` }}
+                      ></div>
+                    }
+                  />
+                }
+              />
               <InputNumber
                 className={styles.number}
                 min={0}
-                addonBefore={item.title}
+                addonBefore={
+                  <DeleteFilled
+                    style={{ color: 'red', cursor: 'pointer' }}
+                    onClick={() => setList(list.slice(idx))}
+                  />
+                }
+                prefix={item.title}
                 style={{ width: '100%' }}
+                value={item.value}
+                onChange={(value) => onInputNumberChange(value, item.iso)}
               />
             </List.Item>
           )}
