@@ -35,7 +35,10 @@ window.getRateScript = function () {
         if (err) {
           reject(err);
         }
-        resolve(body.replace(/window\.onload=function/g, 'function a'));
+        resolve(
+          body.replace(/window\.onload=function/g, 'function a') +
+            '\nwindow.prize = price;',
+        );
       },
     );
   });
