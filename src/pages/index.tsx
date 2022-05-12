@@ -13,10 +13,16 @@ import {
   InputNumber,
   Avatar,
 } from 'antd';
-import { ReloadOutlined, PlusOutlined, DeleteFilled } from '@ant-design/icons';
+import {
+  ReloadOutlined,
+  PlusOutlined,
+  DragOutlined,
+  DeleteOutlined,
+} from '@ant-design/icons';
 import { useState, useCallback } from 'react';
 import { getIconClassName, simpleDeepCopy } from '@/utils';
 import { multiply, divide, fix } from 'mathjs';
+import { Container, Draggable } from 'react-smooth-dnd';
 
 interface ListItemProps {
   iso: string;
@@ -79,6 +85,7 @@ export default function IndexPage() {
         direction="vertical"
         style={{
           padding: 10,
+          width: '100%',
         }}
       >
         <Space>
@@ -90,15 +97,67 @@ export default function IndexPage() {
             3
           </div>
         </Space>
-        <List
+        <Space>
+          <Select defaultValue="CNY:CUR" options={options} />
+          <Button type="primary" icon={<PlusOutlined />} onClick={run}>
+            增加货币
+          </Button>
+        </Space>
+        <Container dragHandleSelector=".dragHandler" orientation="horizontal">
+          {list.map((item, idx) => (
+            <Draggable key={item.iso} className={`${styles['col-2']} drag`}>
+              <div
+                style={{
+                  marginBottom: 10,
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
+              >
+                <Avatar
+                  style={{ backgroundColor: '#ffffff', marginRight: 5 }}
+                  shape="square"
+                  size={24}
+                  icon={
+                    <div
+                      className={getIconClassName(item.iso, 24)}
+                      style={{ backgroundImage: `url(${iconImg})` }}
+                    ></div>
+                  }
+                />
+                <InputNumber
+                  className={styles.number}
+                  min={0}
+                  controls={false}
+                  addonBefore={
+                    <DragOutlined
+                      className="dragHandler"
+                      style={{ cursor: 'grab' }}
+                    />
+                  }
+                  addonAfter={
+                    <DeleteOutlined
+                      style={{ color: 'red', cursor: 'pointer' }}
+                      onClick={() => setList(list.slice(idx))}
+                    />
+                  }
+                  prefix={item.title}
+                  style={{ width: 'calc(100% - 30px)' }}
+                  value={item.value}
+                  onChange={(value) => onInputNumberChange(value, item.iso)}
+                />
+              </div>
+            </Draggable>
+          ))}
+        </Container>
+        {/* <List
           size="large"
           header={
-            <>
+            <Space>
               <Select defaultValue="CNY:CUR" options={options} />
               <Button type="primary" icon={<PlusOutlined />} onClick={run}>
                 增加货币
               </Button>
-            </>
+            </Space>
           }
           bordered
           dataSource={list}
@@ -123,7 +182,10 @@ export default function IndexPage() {
                 className={styles.number}
                 min={0}
                 addonBefore={
-                  <DeleteFilled
+                  <DragOutlined style={{ cursor: 'pointer' }} />
+                }
+                addonAfter={
+                  <DeleteOutlined
                     style={{ color: 'red', cursor: 'pointer' }}
                     onClick={() => setList(list.slice(idx))}
                   />
@@ -135,7 +197,7 @@ export default function IndexPage() {
               />
             </List.Item>
           )}
-        />
+        /> */}
       </Space>
     </Spin>
   );
