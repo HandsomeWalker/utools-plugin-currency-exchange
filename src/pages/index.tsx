@@ -9,7 +9,6 @@ import {
   Spin,
   message,
   Button,
-  List,
   InputNumber,
   Avatar,
 } from 'antd';
@@ -19,10 +18,10 @@ import {
   DragOutlined,
   DeleteOutlined,
 } from '@ant-design/icons';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo, useReducer } from 'react';
 import { getIconClassName, simpleDeepCopy } from '@/utils';
 import { multiply, divide, fix } from 'mathjs';
-import { Container, Draggable } from 'react-smooth-dnd';
+import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 
 interface ListItemProps {
   iso: string;
@@ -32,8 +31,24 @@ interface ListItemProps {
 
 const options = currency.map((item, idx) => ({ ...item, key: idx }));
 
+function listReducer(
+  state: ListItemProps[],
+  { type, payload }: { type: 'add' | 'remove' | 'update'; payload: any },
+): ListItemProps[] {
+  switch (type) {
+    case 'add':
+      return state.concat(payload);
+    case 'remove':
+      return state.filter((item) => item.iso !== payload.iso);
+    case 'update':
+      return payload;
+    default:
+      return state;
+  }
+}
+
 export default function IndexPage() {
-  const [list, setList] = useState<ListItemProps[]>([
+  const [list, dispatchList] = useReducer(listReducer, [
     {
       title: '人名币(CNY)',
       iso: 'CNY:CUR',
@@ -42,6 +57,11 @@ export default function IndexPage() {
     {
       title: '美元(USD)',
       iso: 'USD:CUR',
+      value: 0,
+    },
+    {
+      title: '加拿大元(CAD)',
+      iso: 'CAD:CUR',
       value: 0,
     },
   ]);
@@ -72,12 +92,74 @@ export default function IndexPage() {
           );
         }
       }
-      setList(temp);
+      dispatchList({ type: 'update', payload: temp });
     },
     [price],
   );
 
   const onAddClick = useCallback(() => {}, []);
+
+  const SortableItem: any = useMemo(
+    () =>
+      SortableElement(({ item, items }: any) => (
+        <div
+          style={{
+            marginBottom: 10,
+            display: 'flex',
+            alignItems: 'center',
+            width: 380,
+          }}
+        >
+          <Avatar
+            style={{ backgroundColor: '#ffffff', marginRight: 5 }}
+            shape="square"
+            size={24}
+            icon={
+              <div
+                className={getIconClassName(item.iso, 24)}
+                style={{ backgroundImage: `url(${iconImg})` }}
+              ></div>
+            }
+          />
+          <InputNumber
+            className={styles.number}
+            min={0}
+            controls={false}
+            addonBefore={<DragOutlined style={{ cursor: 'move' }} />}
+            addonAfter={
+              <DeleteOutlined
+                style={{ color: 'red', cursor: 'pointer' }}
+                onClick={() => dispatchList({ type: 'remove', payload: item })}
+              />
+            }
+            prefix={item.title}
+            style={{ width: 340 }}
+            value={item.value}
+            onChange={(value) => onInputNumberChange(value, item.iso)}
+          />
+        </div>
+      )),
+    [],
+  );
+
+  const SortableList: any = useMemo(
+    () =>
+      SortableContainer(({ items }: any) => {
+        return (
+          <div style={{ display: 'flex', flexFlow: 'wrap' }}>
+            {items.map((item: any, index: number) => (
+              <SortableItem
+                key={item.iso}
+                index={index}
+                item={item}
+                items={items}
+              />
+            ))}
+          </div>
+        );
+      }),
+    [],
+  );
 
   return (
     <Spin spinning={loading}>
@@ -99,105 +181,11 @@ export default function IndexPage() {
         </Space>
         <Space>
           <Select defaultValue="CNY:CUR" options={options} />
-          <Button type="primary" icon={<PlusOutlined />} onClick={run}>
+          <Button type="primary" icon={<PlusOutlined />} onClick={onAddClick}>
             增加货币
           </Button>
         </Space>
-        <Container dragHandleSelector=".dragHandler" orientation="horizontal">
-          {list.map((item, idx) => (
-            <Draggable key={item.iso} className={`${styles['col-2']} drag`}>
-              <div
-                style={{
-                  marginBottom: 10,
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-              >
-                <Avatar
-                  style={{ backgroundColor: '#ffffff', marginRight: 5 }}
-                  shape="square"
-                  size={24}
-                  icon={
-                    <div
-                      className={getIconClassName(item.iso, 24)}
-                      style={{ backgroundImage: `url(${iconImg})` }}
-                    ></div>
-                  }
-                />
-                <InputNumber
-                  className={styles.number}
-                  min={0}
-                  controls={false}
-                  addonBefore={
-                    <DragOutlined
-                      className="dragHandler"
-                      style={{ cursor: 'grab' }}
-                    />
-                  }
-                  addonAfter={
-                    <DeleteOutlined
-                      style={{ color: 'red', cursor: 'pointer' }}
-                      onClick={() => setList(list.slice(idx))}
-                    />
-                  }
-                  prefix={item.title}
-                  style={{ width: 'calc(100% - 30px)' }}
-                  value={item.value}
-                  onChange={(value) => onInputNumberChange(value, item.iso)}
-                />
-              </div>
-            </Draggable>
-          ))}
-        </Container>
-        {/* <List
-          size="large"
-          header={
-            <Space>
-              <Select defaultValue="CNY:CUR" options={options} />
-              <Button type="primary" icon={<PlusOutlined />} onClick={run}>
-                增加货币
-              </Button>
-            </Space>
-          }
-          bordered
-          dataSource={list}
-          renderItem={(item, idx) => (
-            <List.Item>
-              <List.Item.Meta
-                avatar={
-                  <Avatar
-                    style={{ backgroundColor: '#ffffff' }}
-                    shape="square"
-                    size={24}
-                    icon={
-                      <div
-                        className={getIconClassName(item.iso, 24)}
-                        style={{ backgroundImage: `url(${iconImg})` }}
-                      ></div>
-                    }
-                  />
-                }
-              />
-              <InputNumber
-                className={styles.number}
-                min={0}
-                addonBefore={
-                  <DragOutlined style={{ cursor: 'pointer' }} />
-                }
-                addonAfter={
-                  <DeleteOutlined
-                    style={{ color: 'red', cursor: 'pointer' }}
-                    onClick={() => setList(list.slice(idx))}
-                  />
-                }
-                prefix={item.title}
-                style={{ width: '100%' }}
-                value={item.value}
-                onChange={(value) => onInputNumberChange(value, item.iso)}
-              />
-            </List.Item>
-          )}
-        /> */}
+        <SortableList items={list} axis="xy" />
       </Space>
     </Spin>
   );
