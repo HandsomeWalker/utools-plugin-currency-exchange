@@ -18,10 +18,14 @@ import {
   DragOutlined,
   DeleteOutlined,
 } from '@ant-design/icons';
-import { useState, useCallback, useMemo, useReducer } from 'react';
+import { useState, useCallback, useMemo, useReducer, useRef } from 'react';
 import { getIconClassName, simpleDeepCopy } from '@/utils';
 import { multiply, divide, fix } from 'mathjs';
-import { SortableContainer, SortableElement } from 'react-sortable-hoc';
+import {
+  SortableContainer,
+  SortableElement,
+  SortableHandle,
+} from 'react-sortable-hoc';
 
 interface ListItemProps {
   iso: string;
@@ -47,7 +51,16 @@ function listReducer(
   }
 }
 
+const DragHandle: any = SortableHandle(() => (
+  <DragOutlined style={{ cursor: 'move' }} />
+));
+
 export default function IndexPage() {
+  const [currSelect, setCurrSelect] = useState<ListItemProps>({
+    title: '人名币(CNY)',
+    iso: 'CNY:CUR',
+    value: 0,
+  });
   const [list, dispatchList] = useReducer(listReducer, [
     {
       title: '人名币(CNY)',
@@ -59,11 +72,6 @@ export default function IndexPage() {
       iso: 'USD:CUR',
       value: 0,
     },
-    {
-      title: '加拿大元(CAD)',
-      iso: 'CAD:CUR',
-      value: 0,
-    },
   ]);
 
   const {
@@ -72,16 +80,16 @@ export default function IndexPage() {
     run,
   } = useRateScript({
     onError(e) {
-      message.error('请求汇率数据出错，请点击刷新按钮重试');
+      message.error('请求汇率数据出错，请点击更新汇率重试');
     },
   });
 
   const onInputNumberChange = useCallback(
-    (value, iso) => {
+    (value, iso, items) => {
       if (value === null) {
         return;
       }
-      let temp = simpleDeepCopy(list);
+      let temp = simpleDeepCopy(items);
       for (const item of temp) {
         if (item.iso === iso) {
           item.value = value;
@@ -96,8 +104,6 @@ export default function IndexPage() {
     },
     [price],
   );
-
-  const onAddClick = useCallback(() => {}, []);
 
   const SortableItem: any = useMemo(
     () =>
@@ -125,7 +131,7 @@ export default function IndexPage() {
             className={styles.number}
             min={0}
             controls={false}
-            addonBefore={<DragOutlined style={{ cursor: 'move' }} />}
+            addonBefore={<DragHandle />}
             addonAfter={
               <DeleteOutlined
                 style={{ color: 'red', cursor: 'pointer' }}
@@ -135,11 +141,12 @@ export default function IndexPage() {
             prefix={item.title}
             style={{ width: 340 }}
             value={item.value}
-            onChange={(value) => onInputNumberChange(value, item.iso)}
+            onChange={(value) => onInputNumberChange(value, item.iso, items)}
+            onClick={(e) => (e.target as any).select()}
           />
         </div>
       )),
-    [],
+    [price],
   );
 
   const SortableList: any = useMemo(
@@ -158,7 +165,7 @@ export default function IndexPage() {
           </div>
         );
       }),
-    [],
+    [price],
   );
 
   return (
@@ -172,7 +179,7 @@ export default function IndexPage() {
       >
         <Space>
           <Button type="primary" icon={<ReloadOutlined />} onClick={run}>
-            刷新
+            更新汇率
           </Button>
           <div>
             汇率计算公式：（银行平均卖出价+银行平均买入价+中国人民银行基准价）/
@@ -180,12 +187,43 @@ export default function IndexPage() {
           </div>
         </Space>
         <Space>
-          <Select defaultValue="CNY:CUR" options={options} />
-          <Button type="primary" icon={<PlusOutlined />} onClick={onAddClick}>
+          <Select
+            labelInValue
+            showSearch
+            style={{ minWidth: 200 }}
+            defaultValue="CNY:CUR"
+            options={options}
+            optionFilterProp="label"
+            onChange={({ label, value }: any) => {
+              setCurrSelect({
+                title: label,
+                iso: value,
+                value: 0,
+              });
+            }}
+          />
+          <Button
+            type="primary"
+            icon={<PlusOutlined />}
+            onClick={() => {
+              if (list.filter((item) => item.iso === currSelect.iso).length) {
+                message.error({
+                  content: `列表已存在：${currSelect.title}`,
+                  key: 'msg',
+                });
+              } else {
+                message.success({
+                  content: `已添加货币：${currSelect.title}`,
+                  key: 'msg',
+                });
+                dispatchList({ type: 'add', payload: currSelect });
+              }
+            }}
+          >
             增加货币
           </Button>
         </Space>
-        <SortableList items={list} axis="xy" />
+        <SortableList useDragHandle items={list} axis="xy" />
       </Space>
     </Spin>
   );
