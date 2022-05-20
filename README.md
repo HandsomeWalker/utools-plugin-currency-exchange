@@ -1,15 +1,3 @@
-# umi project
+# 汇率换算
 
-## Getting Started
-
-Install dependencies,
-
-```bash
-$ yarn
-```
-
-Start the dev server,
-
-```bash
-$ yarn start
-```
+简单易用，提供多种货币转换，enjoy💖
