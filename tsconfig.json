@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "strictNullChecks": false,
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",

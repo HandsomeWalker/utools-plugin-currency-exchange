@@ -11,20 +11,25 @@ import {
   Button,
   InputNumber,
   Avatar,
+  Tooltip,
+  Divider,
+  Empty,
 } from 'antd';
 import {
   ReloadOutlined,
   PlusOutlined,
   DragOutlined,
   DeleteOutlined,
+  InfoCircleOutlined,
 } from '@ant-design/icons';
-import { useState, useCallback, useMemo, useReducer, useRef } from 'react';
-import { getIconClassName, simpleDeepCopy } from '@/utils';
+import { useState, useCallback, useMemo, useReducer, useEffect } from 'react';
+import { getIconClassName, simpleDeepCopy, sortArrayByIndex } from '@/utils';
 import { multiply, divide, fix } from 'mathjs';
 import {
   SortableContainer,
   SortableElement,
   SortableHandle,
+  SortEnd,
 } from 'react-sortable-hoc';
 
 interface ListItemProps {
@@ -39,21 +44,59 @@ function listReducer(
   state: ListItemProps[],
   { type, payload }: { type: 'add' | 'remove' | 'update'; payload: any },
 ): ListItemProps[] {
+  let ret: ListItemProps[];
   switch (type) {
     case 'add':
-      return state.concat(payload);
+      ret = state.concat([payload]);
+      break;
     case 'remove':
-      return state.filter((item) => item.iso !== payload.iso);
+      ret = state.filter((item) => item.iso !== payload.iso);
+      break;
     case 'update':
-      return payload;
+      ret = payload;
+      break;
     default:
-      return state;
+      ret = state;
+      break;
   }
+  utools.dbStorage.setItem('layout', ret);
+  return ret;
 }
 
 const DragHandle: any = SortableHandle(() => (
   <DragOutlined style={{ cursor: 'move' }} />
 ));
+
+function getExchangedValue(
+  price: any,
+  item: ListItemProps,
+  value: number,
+  iso: string,
+) {
+  let ret: number;
+  try {
+    ret = fix(
+      divide(multiply(price[item.iso], value), price[iso]) as number,
+      2,
+    );
+  } catch (e) {
+    console.log(e);
+    ret = 0;
+  }
+  return ret;
+}
+
+const layout: ListItemProps[] = utools.dbStorage.getItem('layout') || [];
+
+let map: any = {};
+for (const item of currency) {
+  map[item.value] ? map[item.value].push(item) : (map[item.value] = [item]);
+}
+for (const key in map) {
+  if (map[key].length > 1) {
+    console.log(map[key]);
+  }
+}
 
 export default function IndexPage() {
   const [currSelect, setCurrSelect] = useState<ListItemProps>({
@@ -61,49 +104,48 @@ export default function IndexPage() {
     iso: 'CNY:CUR',
     value: 0,
   });
-  const [list, dispatchList] = useReducer(listReducer, [
-    {
-      title: '人名币(CNY)',
-      iso: 'CNY:CUR',
-      value: 0,
-    },
-    {
-      title: '美元(USD)',
-      iso: 'USD:CUR',
-      value: 0,
-    },
-  ]);
+  const [list, dispatchList] = useReducer(listReducer, layout);
+
+  useEffect(() => {
+    utools.onPluginEnter(function ({ code, payload }: any) {
+      if (code === 'fast') {
+        utools.setExpendHeight(0);
+        utools.setSubInputValue(payload);
+      }
+    });
+  }, []);
 
   const {
     data: price,
     loading,
     run,
   } = useRateScript({
+    onSuccess(price) {
+      list.length &&
+        onInputNumberChange(list[0].value, list[0].iso, list, price);
+    },
     onError(e) {
-      message.error('请求汇率数据出错，请点击更新汇率重试');
+      message.error({
+        content: '请求汇率数据出错，请重试',
+        key: 'msg',
+      });
     },
   });
 
-  const onInputNumberChange = useCallback(
-    (value, iso, items) => {
-      if (value === null) {
-        return;
+  const onInputNumberChange = useCallback((value, iso, items, price) => {
+    if (value === null) {
+      return;
+    }
+    let temp = simpleDeepCopy(items);
+    for (const item of temp) {
+      if (item.iso === iso) {
+        item.value = value;
+      } else {
+        item.value = getExchangedValue(price, item, value, iso);
       }
-      let temp = simpleDeepCopy(items);
-      for (const item of temp) {
-        if (item.iso === iso) {
-          item.value = value;
-        } else {
-          item.value = fix(
-            divide(multiply(price[item.iso], value), price[iso]) as number,
-            2,
-          );
-        }
-      }
-      dispatchList({ type: 'update', payload: temp });
-    },
-    [price],
-  );
+    }
+    dispatchList({ type: 'update', payload: temp });
+  }, []);
 
   const SortableItem: any = useMemo(
     () =>
@@ -111,9 +153,9 @@ export default function IndexPage() {
         <div
           style={{
             marginBottom: 10,
+            marginLeft: 13,
             display: 'flex',
             alignItems: 'center',
-            width: 380,
           }}
         >
           <Avatar
@@ -141,7 +183,9 @@ export default function IndexPage() {
             prefix={item.title}
             style={{ width: 340 }}
             value={item.value}
-            onChange={(value) => onInputNumberChange(value, item.iso, items)}
+            onChange={(value) =>
+              onInputNumberChange(value, item.iso, items, price)
+            }
             onClick={(e) => (e.target as any).select()}
           />
         </div>
@@ -170,61 +214,87 @@ export default function IndexPage() {
 
   return (
     <Spin spinning={loading}>
-      <Space
-        direction="vertical"
+      <div
         style={{
           padding: 10,
           width: '100%',
         }}
       >
-        <Space>
-          <Button type="primary" icon={<ReloadOutlined />} onClick={run}>
-            更新汇率
-          </Button>
-          <div>
-            汇率计算公式：（银行平均卖出价+银行平均买入价+中国人民银行基准价）/
-            3
-          </div>
-        </Space>
-        <Space>
-          <Select
-            labelInValue
-            showSearch
-            style={{ minWidth: 200 }}
-            defaultValue="CNY:CUR"
-            options={options}
-            optionFilterProp="label"
-            onChange={({ label, value }: any) => {
-              setCurrSelect({
-                title: label,
-                iso: value,
-                value: 0,
-              });
-            }}
-          />
-          <Button
-            type="primary"
-            icon={<PlusOutlined />}
-            onClick={() => {
-              if (list.filter((item) => item.iso === currSelect.iso).length) {
-                message.error({
-                  content: `列表已存在：${currSelect.title}`,
-                  key: 'msg',
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Space>
+            <Select
+              labelInValue
+              showSearch
+              style={{ minWidth: 200 }}
+              defaultValue="CNY:CUR"
+              options={options}
+              optionFilterProp="label"
+              onChange={({ label, value }: any) => {
+                setCurrSelect({
+                  title: label,
+                  iso: value,
+                  value: 0,
                 });
-              } else {
-                message.success({
-                  content: `已添加货币：${currSelect.title}`,
-                  key: 'msg',
+              }}
+            />
+            <Button
+              type="primary"
+              icon={<PlusOutlined />}
+              onClick={() => {
+                if (list.filter((item) => item.iso === currSelect.iso).length) {
+                  message.error({
+                    content: '重复添加',
+                    key: 'msg',
+                  });
+                } else {
+                  dispatchList({
+                    type: 'add',
+                    payload: {
+                      ...currSelect,
+                      value: list.length
+                        ? getExchangedValue(
+                            price,
+                            currSelect,
+                            list[0].value,
+                            list[0].iso,
+                          )
+                        : 0,
+                    },
+                  });
+                }
+              }}
+            >
+              添加货币
+            </Button>
+          </Space>
+          <Space>
+            <Tooltip title="汇率计算公式：（银行平均卖出价+银行平均买入价+中国人民银行基准价）/ 3">
+              <InfoCircleOutlined style={{ cursor: 'pointer' }} />
+            </Tooltip>
+            <Button type="primary" icon={<ReloadOutlined />} onClick={run}>
+              更新实时汇率
+            </Button>
+          </Space>
+        </div>
+        <Divider />
+        {list.length ? (
+          <SortableList
+            useDragHandle
+            items={list}
+            axis="xy"
+            onSortEnd={({ oldIndex, newIndex }: SortEnd) => {
+              if (newIndex !== oldIndex) {
+                dispatchList({
+                  type: 'update',
+                  payload: sortArrayByIndex(list, oldIndex, newIndex),
                 });
-                dispatchList({ type: 'add', payload: currSelect });
               }
             }}
-          >
-            增加货币
-          </Button>
-        </Space>
-        <SortableList useDragHandle items={list} axis="xy" />
-      </Space>
+          />
+        ) : (
+          <Empty description="请添加货币" />
+        )}
+      </div>
     </Spin>
   );
 }

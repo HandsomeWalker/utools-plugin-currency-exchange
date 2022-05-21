@@ -128,10 +128,6 @@
     "value": "AWG:CUR"
   },
   {
-    "label": "澳大利亚元(AUD)",
-    "value": "AUD:CUR"
-  },
-  {
     "label": "奥地利先令(ATS)",
     "value": "ATS:CUR"
   },
@@ -168,10 +164,6 @@
     "value": "BYR:CUR"
   },
   {
-    "label": "比利时法郎(BEF)",
-    "value": "BEF:CUR"
-  },
-  {
     "label": "伯利兹元(BZD)",
     "value": "BZD:CUR"
   },
@@ -204,10 +196,6 @@
     "value": "BRL:CUR"
   },
   {
-    "label": "英镑(GBP)",
-    "value": "GBP:CUR"
-  },
-  {
     "label": "文莱币(BND)",
     "value": "BND:CUR"
   },
@@ -230,10 +218,6 @@
   {
     "label": "中非法郎(XAF)",
     "value": "XAF:CUR"
-  },
-  {
-    "label": "加元(CAD)",
-    "value": "CAD:CUR"
   },
   {
     "label": "加那利群岛比塞塔(ESP)",
@@ -296,10 +280,6 @@
     "value": "CDF:CUR"
   },
   {
-    "label": "丹麦克朗(DKK)",
-    "value": "DKK:CUR"
-  },
-  {
     "label": "吉布提法郎(DJF)",
     "value": "DJF:CUR"
   },
@@ -334,10 +314,6 @@
   {
     "label": "欧元(旧)(XEU)",
     "value": "XEU:CUR"
-  },
-  {
-    "label": "欧元(EUR)",
-    "value": "EUR:CUR"
   },
   {
     "label": "斐济元(FJD)",
@@ -388,10 +364,6 @@
     "value": "GRD:CUR"
   },
   {
-    "label": "丹麦克郎(DKK)",
-    "value": "DKK:CUR"
-  },
-  {
     "label": "格林纳达东加勒比元(XCD)",
     "value": "XCD:CUR"
   },
@@ -418,10 +390,6 @@
   {
     "label": "洪都拉斯伦皮拉(HNL)",
     "value": "HNL:CUR"
-  },
-  {
-    "label": "港元(HKD)",
-    "value": "HKD:CUR"
   },
   {
     "label": "匈牙利福林(HUF)",
@@ -580,10 +548,6 @@
     "value": "MDL:CUR"
   },
   {
-    "label": "摩纳哥法郎(EUR)",
-    "value": "EUR:CUR"
-  },
-  {
     "label": "蒙古图格里克(MNT)",
     "value": "MNT:CUR"
   },
@@ -614,10 +578,6 @@
   {
     "label": "安第列斯群岛盾(ANG)",
     "value": "ANG:CUR"
-  },
-  {
-    "label": "荷兰盾(NLG)",
-    "value": "NLG:CUR"
   },
   {
     "label": "尼加拉瓜科多巴(NIO)",
@@ -774,10 +734,6 @@
   {
     "label": "叙利亚磅(SYP)",
     "value": "SYP:CUR"
-  },
-  {
-    "label": "台币(TWD)",
-    "value": "TWD:CUR"
   },
   {
     "label": "塔吉克斯坦索莫尼(TJS)",
