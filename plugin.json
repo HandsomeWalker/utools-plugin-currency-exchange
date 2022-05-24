@@ -13,7 +13,7 @@
     {
       "code": "hl",
       "explain": "汇率换算",
-      "cmds": ["汇率"]
+      "cmds": ["汇率", "货币", "money", "exchange"]
     },
     {
       "code": "fast",

@@ -159,7 +159,7 @@ export default function IndexPage() {
           }}
         >
           <Avatar
-            style={{ backgroundColor: '#ffffff', marginRight: 5 }}
+            style={{ backgroundColor: 'transparent', marginRight: 5 }}
             shape="square"
             size={24}
             icon={
