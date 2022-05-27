@@ -1,4 +1,4 @@
-import '@/styles/icon.css';
+import '@/styles/icon.less';
 import iconImg from '@/assets/24.png';
 import styles from './index.less';
 import currency from '@/assets/currency.json';
@@ -88,15 +88,15 @@ function getExchangedValue(
 
 const layout: ListItemProps[] = utools.dbStorage.getItem('layout') || [];
 
-let map: any = {};
-for (const item of currency) {
-  map[item.value] ? map[item.value].push(item) : (map[item.value] = [item]);
-}
-for (const key in map) {
-  if (map[key].length > 1) {
-    console.log(map[key]);
-  }
-}
+// let map: any = {};
+// for (const item of currency) {
+//   map[item.value] ? map[item.value].push(item) : (map[item.value] = [item]);
+// }
+// for (const key in map) {
+//   if (map[key].length > 1) {
+//     console.log(map[key]);
+//   }
+// }
 
 export default function IndexPage() {
   const [currSelect, setCurrSelect] = useState<ListItemProps>({
@@ -104,13 +104,16 @@ export default function IndexPage() {
     iso: 'CNY:CUR',
     value: 0,
   });
+  const [isFast, setIsFast] = useState<boolean>(true);
   const [list, dispatchList] = useReducer(listReducer, layout);
 
   useEffect(() => {
     utools.onPluginEnter(function ({ code, payload }: any) {
       if (code === 'fast') {
-        utools.setExpendHeight(0);
+        // utools.setExpendHeight(0);
         utools.setSubInputValue(payload);
+      } else {
+        setIsFast(false);
       }
     });
   }, []);
@@ -213,88 +216,96 @@ export default function IndexPage() {
   );
 
   return (
-    <Spin spinning={loading}>
-      <div
-        style={{
-          padding: 10,
-          width: '100%',
-        }}
-      >
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Space>
-            <Select
-              labelInValue
-              showSearch
-              style={{ minWidth: 200 }}
-              defaultValue="CNY:CUR"
-              options={options}
-              optionFilterProp="label"
-              onChange={({ label, value }: any) => {
-                setCurrSelect({
-                  title: label,
-                  iso: value,
-                  value: 0,
-                });
-              }}
-            />
-            <Button
-              type="primary"
-              icon={<PlusOutlined />}
-              onClick={() => {
-                if (list.filter((item) => item.iso === currSelect.iso).length) {
-                  message.error({
-                    content: '重复添加',
-                    key: 'msg',
-                  });
-                } else {
-                  dispatchList({
-                    type: 'add',
-                    payload: {
-                      ...currSelect,
-                      value: list.length
-                        ? getExchangedValue(
-                            price,
-                            currSelect,
-                            list[0].value,
-                            list[0].iso,
-                          )
-                        : 0,
-                    },
-                  });
-                }
-              }}
-            >
-              添加货币
-            </Button>
-          </Space>
-          <Space>
-            <Tooltip title="汇率计算公式：（银行平均卖出价+银行平均买入价+中国人民银行基准价）/ 3">
-              <InfoCircleOutlined style={{ cursor: 'pointer' }} />
-            </Tooltip>
-            <Button type="primary" icon={<ReloadOutlined />} onClick={run}>
-              更新实时汇率
-            </Button>
-          </Space>
-        </div>
-        <Divider />
-        {list.length ? (
-          <SortableList
-            useDragHandle
-            items={list}
-            axis="xy"
-            onSortEnd={({ oldIndex, newIndex }: SortEnd) => {
-              if (newIndex !== oldIndex) {
-                dispatchList({
-                  type: 'update',
-                  payload: sortArrayByIndex(list, oldIndex, newIndex),
-                });
-              }
+    <>
+      {isFast ? (
+        <div>快速汇率转换视图</div>
+      ) : (
+        <Spin spinning={loading}>
+          <div
+            style={{
+              padding: 10,
+              width: '100%',
             }}
-          />
-        ) : (
-          <Empty description="请添加货币" />
-        )}
-      </div>
-    </Spin>
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Space>
+                <Select
+                  labelInValue
+                  showSearch
+                  style={{ minWidth: 200 }}
+                  defaultValue="CNY:CUR"
+                  options={options}
+                  optionFilterProp="label"
+                  onChange={({ label, value }: any) => {
+                    setCurrSelect({
+                      title: label,
+                      iso: value,
+                      value: 0,
+                    });
+                  }}
+                />
+                <Button
+                  type="primary"
+                  icon={<PlusOutlined />}
+                  onClick={() => {
+                    if (
+                      list.filter((item) => item.iso === currSelect.iso).length
+                    ) {
+                      message.error({
+                        content: '重复添加',
+                        key: 'msg',
+                      });
+                    } else {
+                      dispatchList({
+                        type: 'add',
+                        payload: {
+                          ...currSelect,
+                          value: list.length
+                            ? getExchangedValue(
+                                price,
+                                currSelect,
+                                list[0].value,
+                                list[0].iso,
+                              )
+                            : 0,
+                        },
+                      });
+                    }
+                  }}
+                >
+                  添加货币
+                </Button>
+              </Space>
+              <Space>
+                <Tooltip title="汇率计算公式：（银行平均卖出价+银行平均买入价+中国人民银行基准价）/ 3">
+                  <InfoCircleOutlined style={{ cursor: 'pointer' }} />
+                </Tooltip>
+                <Button type="primary" icon={<ReloadOutlined />} onClick={run}>
+                  更新实时汇率
+                </Button>
+              </Space>
+            </div>
+            <Divider />
+            {list.length ? (
+              <SortableList
+                useDragHandle
+                items={list}
+                axis="xy"
+                onSortEnd={({ oldIndex, newIndex }: SortEnd) => {
+                  if (newIndex !== oldIndex) {
+                    dispatchList({
+                      type: 'update',
+                      payload: sortArrayByIndex(list, oldIndex, newIndex),
+                    });
+                  }
+                }}
+              />
+            ) : (
+              <Empty description="请添加货币" />
+            )}
+          </div>
+        </Spin>
+      )}
+    </>
   );
 }
