@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
 
-interface DoRateScriptProps {
+interface UseRateScriptProps {
   onSuccess?: (price: any) => void;
   onError?: (err: any) => void;
   refreshDeps?: any[];
 }
-interface DoRateScriptReturnProps {
+interface UseRateScriptReturnProps {
   data: any;
   loading: boolean;
   run: () => void;
 }
 
-function doRateScript(config: DoRateScriptProps): DoRateScriptReturnProps {
+function useRateScript(config: UseRateScriptProps): UseRateScriptReturnProps {
   const { onSuccess, onError, refreshDeps = [] } = config;
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState();
@@ -37,4 +37,4 @@ function doRateScript(config: DoRateScriptProps): DoRateScriptReturnProps {
   return { data, loading, run: () => setToggle(!toggle) };
 }
 
-export default doRateScript;
+export default useRateScript;

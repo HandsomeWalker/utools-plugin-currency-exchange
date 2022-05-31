@@ -17,3 +17,8 @@ files.forEach((file) => {
     );
   }
 });
+
+fs.copyFileSync(
+  path.resolve('./', 'src/styles/antd.dark.min.css'),
+  path.resolve('./', 'dist/antd.dark.min.css'),
+);
