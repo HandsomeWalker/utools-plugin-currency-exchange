@@ -272,6 +272,7 @@ export default function IndexPage() {
               defaultValue="CNY:CUR"
               options={options}
               optionFilterProp="label"
+              tabIndex={-1}
               onChange={({ label, value }: any) => {
                 setCurrSelect({
                   title: label,
@@ -283,6 +284,7 @@ export default function IndexPage() {
             <Button
               type="primary"
               icon={<PlusOutlined />}
+              tabIndex={-1}
               onClick={() => {
                 if (list.filter((item) => item.iso === currSelect.iso).length) {
                   message.error({
@@ -314,7 +316,12 @@ export default function IndexPage() {
             <Tooltip title="汇率计算公式：（银行平均卖出价+银行平均买入价+中国人民银行基准价）/ 3">
               <InfoCircleOutlined style={{ cursor: 'pointer' }} />
             </Tooltip>
-            <Button type="primary" icon={<ReloadOutlined />} onClick={run}>
+            <Button
+              type="primary"
+              icon={<ReloadOutlined />}
+              onClick={run}
+              tabIndex={-1}
+            >
               更新实时汇率
             </Button>
           </Space>
