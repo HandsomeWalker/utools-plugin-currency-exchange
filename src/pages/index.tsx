@@ -138,14 +138,8 @@ const layout: ListItemProps[] = utools.dbStorage.getItem('layout') || [
 //   }
 // }
 
-let globalPayload = '';
-utools.onPluginEnter(({ code, payload }: any) => {
-  if (code === 'fast') {
-    globalPayload = payload;
-  }
-});
-
 export default function IndexPage() {
+  const [fastPayload, setFastPaload] = useState<any>(0);
   const [currSelect, setCurrSelect] = useState<ListItemProps>({
     title: '人名币(CNY)',
     iso: 'CNY:CUR',
@@ -161,7 +155,7 @@ export default function IndexPage() {
     onSuccess(price) {
       list.length &&
         onInputNumberChange(
-          globalPayload || list[0].value,
+          fastPayload || list[0].value,
           list[0].iso,
           list,
           price,
@@ -174,6 +168,15 @@ export default function IndexPage() {
       });
     },
   });
+
+  useEffect(() => {
+    utools.onPluginEnter(({ code, payload }: any) => {
+      if (code === 'fast') {
+        setFastPaload(payload);
+      }
+      run();
+    });
+  }, []);
 
   const onInputNumberChange = useCallback((value, iso, items, price) => {
     if (value === null) {
@@ -188,6 +191,7 @@ export default function IndexPage() {
       }
     }
     dispatchList({ type: 'update', payload: temp });
+    setFastPaload(0);
   }, []);
 
   const SortableItem: any = useMemo(

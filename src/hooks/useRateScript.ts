@@ -15,7 +15,7 @@ function useRateScript(config: UseRateScriptProps): UseRateScriptReturnProps {
   const { onSuccess, onError, refreshDeps = [] } = config;
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState();
-  const [toggle, setToggle] = useState<boolean>(false);
+  const [toggle, setToggle] = useState<any>(Date.now());
 
   useEffect(() => {
     async function asyncFunc() {
@@ -34,7 +34,7 @@ function useRateScript(config: UseRateScriptProps): UseRateScriptReturnProps {
     asyncFunc();
   }, [...refreshDeps, toggle]);
 
-  return { data, loading, run: () => setToggle(!toggle) };
+  return { data, loading, run: () => setToggle(Date.now()) };
 }
 
 export default useRateScript;

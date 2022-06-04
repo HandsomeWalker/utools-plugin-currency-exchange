@@ -6,7 +6,7 @@
     "main": "http://localhost:8000"
   },
   "main": "index.html",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "logo": "logo.png",
   "preload": "preload.js",
   "features": [
