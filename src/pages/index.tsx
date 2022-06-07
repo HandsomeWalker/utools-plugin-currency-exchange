@@ -97,7 +97,7 @@ function getExchangedValue(
 
 const layout: ListItemProps[] = utools.dbStorage.getItem('layout') || [
   {
-    title: '人名币(CNY)',
+    title: '人民币(CNY)',
     iso: 'CNY:CUR',
     value: 0,
   },
@@ -141,7 +141,7 @@ const layout: ListItemProps[] = utools.dbStorage.getItem('layout') || [
 export default function IndexPage() {
   const [fastPayload, setFastPaload] = useState<any>(0);
   const [currSelect, setCurrSelect] = useState<ListItemProps>({
-    title: '人名币(CNY)',
+    title: '人民币(CNY)',
     iso: 'CNY:CUR',
     value: 0,
   });
