@@ -72,6 +72,11 @@ function listReducer(
   return ret;
 }
 
+function fixCountReducer(state: number, payload: number) {
+  utools.dbStorage.setItem('fixCount', payload);
+  return payload;
+}
+
 const DragHandle: any = SortableHandle(() => (
   <DragOutlined style={{ cursor: 'move' }} />
 ));
@@ -81,12 +86,13 @@ function getExchangedValue(
   item: ListItemProps,
   value: number,
   iso: string,
+  fixCount: number,
 ) {
   let ret: number;
   try {
     ret = fix(
       divide(multiply(price[item.iso], value), price[iso]) as number,
-      2,
+      fixCount,
     );
   } catch (e) {
     console.log(e);
@@ -128,6 +134,8 @@ const layout: ListItemProps[] = utools.dbStorage.getItem('layout') || [
   },
 ];
 
+const savedFixCount = utools.dbStorage.getItem('fixCount') || 2;
+
 // let map: any = {};
 // for (const item of currency) {
 //   map[item.value] ? map[item.value].push(item) : (map[item.value] = [item]);
@@ -146,6 +154,7 @@ export default function IndexPage() {
     value: 0,
   });
   const [list, dispatchList] = useReducer(listReducer, layout);
+  const [fixCount, setFixCount] = useState<number>(savedFixCount);
 
   const {
     data: price,
@@ -178,21 +187,24 @@ export default function IndexPage() {
     });
   }, []);
 
-  const onInputNumberChange = useCallback((value, iso, items, price) => {
-    if (value === null) {
-      return;
-    }
-    let temp = simpleDeepCopy(items);
-    for (const item of temp) {
-      if (item.iso === iso) {
-        item.value = value;
-      } else {
-        item.value = getExchangedValue(price, item, value, iso);
+  const onInputNumberChange = useCallback(
+    (value, iso, items, price, fix = fixCount) => {
+      if (value === null) {
+        return;
       }
-    }
-    dispatchList({ type: 'update', payload: temp });
-    setFastPaload(0);
-  }, []);
+      let temp = simpleDeepCopy(items);
+      for (const item of temp) {
+        if (item.iso === iso) {
+          item.value = value;
+        } else {
+          item.value = getExchangedValue(price, item, value, iso, fix);
+        }
+      }
+      dispatchList({ type: 'update', payload: temp });
+      setFastPaload(0);
+    },
+    [fixCount],
+  );
 
   const SortableItem: any = useMemo(
     () =>
@@ -237,7 +249,7 @@ export default function IndexPage() {
           />
         </div>
       )),
-    [price],
+    [price, fixCount],
   );
 
   const SortableList: any = useMemo(
@@ -256,7 +268,7 @@ export default function IndexPage() {
           </div>
         );
       }),
-    [price],
+    [price, fixCount],
   );
 
   return (
@@ -269,6 +281,27 @@ export default function IndexPage() {
       >
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <Space>
+            <InputNumber
+              value={fixCount}
+              min={0}
+              max={10}
+              onClick={(e) => (e.target as any).select()}
+              onChange={async (val) => {
+                if (typeof val === 'number') {
+                  utools.dbStorage.setItem('fixCount', val);
+                  onInputNumberChange(
+                    list[0].value,
+                    list[0].iso,
+                    list,
+                    price,
+                    val,
+                  );
+                  setFixCount(val);
+                }
+              }}
+              prefix="保留位数"
+              style={{ width: 110 }}
+            />
             <Select
               labelInValue
               showSearch
@@ -306,6 +339,7 @@ export default function IndexPage() {
                             currSelect,
                             list[0].value,
                             list[0].iso,
+                            fixCount,
                           )
                         : 0,
                     },
