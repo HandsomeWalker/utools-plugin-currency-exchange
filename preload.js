@@ -2,6 +2,15 @@ const https = require('https');
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36';
 
+function qs(obj) {
+  let ret = '';
+  for (const key in obj) {
+    const value = obj[key];
+    ret += `${key}=${value}&`;
+  }
+  return ret.slice(0, ret.length - 1);
+}
+
 function request(options, cb) {
   const req = https.request(options, function (res) {
     let html = '';
@@ -39,6 +48,28 @@ window.getRateScript = function () {
           body.replace(/window\.onload=function/g, 'function a') +
             '\nwindow.prize = price;',
         );
+      },
+    );
+  });
+};
+
+window.apiAction = function (params) {
+  return new Promise((resolve, reject) => {
+    request(
+      {
+        hostname: 'freecurrencyrates.com',
+        path: `/api/action.php?${qs(params)}`,
+        port: 443,
+        method: 'GET',
+        headers: {
+          'user-agent': UA,
+        },
+      },
+      function (err, body) {
+        if (err) {
+          reject(err);
+        }
+        resolve(JSON.parse(body));
       },
     );
   });

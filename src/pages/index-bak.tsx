@@ -1,7 +1,8 @@
 import '@/styles/icon.css';
 import iconImg from '@/assets/24.png';
 import styles from './index.less';
-import useRequest from '@/hooks/useRequest';
+import currency from '@/assets/currency.json';
+import useRateScript from '@/hooks/useRateScript';
 import {
   Select,
   Space,
@@ -30,13 +31,14 @@ import {
   SortableHandle,
   SortEnd,
 } from 'react-sortable-hoc';
-import { getCurrency, getPrice } from '@/apis';
 
 interface ListItemProps {
   iso: string;
   title: string;
   value: number;
 }
+
+const options = currency.map((item, idx) => ({ ...item, key: idx }));
 
 function listReducer(
   state: ListItemProps[],
@@ -89,10 +91,7 @@ function getExchangedValue(
   let ret: number;
   try {
     ret = fix(
-      divide(
-        multiply(price[item.iso.replace(/:CUR/g, '')], value),
-        price[iso.replace(/:CUR/g, '')],
-      ) as number,
+      divide(multiply(price[item.iso], value), price[iso]) as number,
       fixCount,
     );
   } catch (e) {
@@ -104,89 +103,80 @@ function getExchangedValue(
 
 const layout: ListItemProps[] = utools.dbStorage.getItem('layout') || [
   {
-    title: '中国元(CNY)',
-    iso: 'CNY',
+    title: '人民币(CNY)',
+    iso: 'CNY:CUR',
     value: 0,
   },
   {
     title: '阿根廷比索(ARS)',
-    iso: 'ARS',
+    iso: 'ARS:CUR',
     value: 0,
   },
   {
     title: '土耳其里拉(TRY)',
-    iso: 'TRY',
+    iso: 'TRY:CUR',
     value: 0,
   },
   {
     title: '港币(HKD)',
-    iso: 'HKD',
+    iso: 'HKD:CUR',
     value: 0,
   },
   {
     title: '俄罗斯卢布(RUB)',
-    iso: 'RUB',
+    iso: 'RUB:CUR',
     value: 0,
   },
   {
     title: '美元(USD)',
-    iso: 'USD',
+    iso: 'USD:CUR',
     value: 0,
   },
 ];
 
 const savedFixCount = utools.dbStorage.getItem('fixCount') || 2;
 
+// let map: any = {};
+// for (const item of currency) {
+//   map[item.value] ? map[item.value].push(item) : (map[item.value] = [item]);
+// }
+// for (const key in map) {
+//   if (map[key].length > 1) {
+//     console.log(map[key]);
+//   }
+// }
+
 export default function IndexPage() {
   const [fastPayload, setFastPaload] = useState<any>(0);
   const [currSelect, setCurrSelect] = useState<ListItemProps>({
-    title: '中国元(CNY)',
-    iso: 'CNY',
+    title: '人民币(CNY)',
+    iso: 'CNY:CUR',
     value: 0,
   });
   const [list, dispatchList] = useReducer(listReducer, layout);
   const [fixCount, setFixCount] = useState<number>(savedFixCount);
 
-  // const { data: sourceOptions = [], loading: loadingSource } = useRequest(getSource);
-  const { data: currencyOptions = [], loading: loadingCurrency } = useRequest(
-    () => getCurrency({ s: 'fcr' }),
-    {
-      formatResult(data) {
-        let ret = [];
-        for (const item of data) {
-          if (ret.filter((each) => each.flag === item.flag).length === 0) {
-            ret.push({ ...item, title: `${item.title}(${item.iso})` });
-          }
-        }
-        return ret;
-      },
-    },
-  );
-
   const {
     data: price,
     loading,
     run,
-  } = useRequest(
-    () => getPrice(list.map((item) => item.iso.replace(/:CUR/g, ''))),
-    {
-      onSuccess(price) {
-        list.length &&
-          onInputNumberChange(
-            fastPayload || list[0].value,
-            list[0].iso,
-            list,
-            price,
-          );
-      },
-      onError(e) {
-        message.error({
-          content: '请求汇率数据出错，请重试',
-          key: 'msg',
-        });
-      },
+  } = useRateScript({
+    onSuccess(price) {
+      list.length &&
+        onInputNumberChange(
+          fastPayload || list[0].value,
+          list[0].iso,
+          list,
+          price,
+        );
     },
-  );
+    onError(e) {
+      message.error({
+        content: '请求汇率数据出错，请重试',
+        key: 'msg',
+      });
+    },
+  });
 
   useEffect(() => {
     utools.onPluginEnter(({ code, payload }: any) => {
@@ -312,36 +302,18 @@ export default function IndexPage() {
               prefix="保留位数"
               style={{ width: 110 }}
             />
-            {/* <Select
-              labelInValue
-              showSearch
-              loading={loadingSource}
-              style={{ minWidth: 200 }}
-              options={sourceOptions}
-              optionFilterProp="title"
-              fieldNames={{
-                label: 'title',
-                value: 'tag'
-              }}
-              tabIndex={-1}
-            /> */}
             <Select
               labelInValue
               showSearch
-              loading={loadingCurrency}
               style={{ minWidth: 200 }}
-              options={currencyOptions}
-              optionFilterProp="title"
-              defaultValue={'cn.png'}
-              fieldNames={{
-                label: 'title',
-                value: 'flag',
-              }}
+              defaultValue="CNY:CUR"
+              options={options}
+              optionFilterProp="label"
               tabIndex={-1}
               onChange={({ label, value }: any) => {
                 setCurrSelect({
                   title: label,
-                  iso: label.replace(/(.+\(|\))/g, ''),
+                  iso: value,
                   value: 0,
                 });
               }}
@@ -359,28 +331,36 @@ export default function IndexPage() {
                 } else {
                   dispatchList({
                     type: 'add',
-                    // payload: {
-                    //   ...currSelect,
-                    //   value: list.length
-                    //     ? getExchangedValue(
-                    //         price,
-                    //         currSelect,
-                    //         list[0].value,
-                    //         list[0].iso,
-                    //         fixCount,
-                    //       )
-                    //     : 0,
-                    // },
                     payload: {
                       ...currSelect,
-                      value: 0,
+                      value: list.length
+                        ? getExchangedValue(
+                            price,
+                            currSelect,
+                            list[0].value,
+                            list[0].iso,
+                            fixCount,
+                          )
+                        : 0,
                     },
                   });
-                  run();
                 }
               }}
             >
               添加货币
+            </Button>
+          </Space>
+          <Space>
+            <Tooltip title="汇率计算公式：（银行平均卖出价+银行平均买入价+中国人民银行基准价）/ 3">
+              <InfoCircleOutlined style={{ cursor: 'pointer' }} />
+            </Tooltip>
+            <Button
+              type="primary"
+              icon={<ReloadOutlined />}
+              onClick={run}
+              tabIndex={-1}
+            >
+              更新实时汇率
             </Button>
           </Space>
         </div>
