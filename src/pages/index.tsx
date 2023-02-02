@@ -2,6 +2,7 @@ import '@/styles/icon.css';
 import iconImg from '@/assets/24.png';
 import styles from './index.less';
 import useRequest from '@/hooks/useRequest';
+// import CustomCmds from '@/components/CustomCmds';
 import {
   Select,
   Space,
@@ -383,6 +384,7 @@ export default function IndexPage() {
               添加货币
             </Button>
           </Space>
+          {/* <CustomCmds list={list} /> */}
         </div>
         <Divider />
         {list.length ? (
