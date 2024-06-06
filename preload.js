@@ -1,7 +1,9 @@
 const https = require('https');
+const { HttpsProxyAgent } = require('https-proxy-agent');
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36';
 
+const agent = new HttpsProxyAgent('http://127.0.0.1:7890');
 function qs(obj) {
   let ret = '';
   for (const key in obj) {
@@ -36,6 +38,7 @@ window.getRateScript = function () {
         path: '/hv.js',
         port: 443,
         method: 'GET',
+        agent,
         headers: {
           'user-agent': UA,
         },
@@ -61,6 +64,7 @@ window.apiAction = function (params) {
         path: `/api/action.php?${qs(params)}`,
         port: 443,
         method: 'GET',
+        agent,
         headers: {
           'user-agent': UA,
         },
