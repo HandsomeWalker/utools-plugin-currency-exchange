@@ -1,7 +1,7 @@
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36';
 
-function qs(obj) {
+function qs(obj: Record<string, any>): string {
   let ret = '';
   for (const key in obj) {
     const value = obj[key];
@@ -10,7 +10,7 @@ function qs(obj) {
   return ret.slice(0, ret.length - 1);
 }
 
-async function request(url, options) {
+async function request(url: string, options: RequestInit): Promise<string> {
   const response = await fetch(url, options);
 
   if (!response.ok) {
@@ -20,7 +20,7 @@ async function request(url, options) {
   return response.text();
 }
 
-export const getRateScript = function () {
+export const getRateScript = function (): Promise<string> {
   return new Promise((resolve, reject) => {
     request('https://www.usd-cny.com/hv.js', {
       method: 'GET',
@@ -40,7 +40,7 @@ export const getRateScript = function () {
   });
 };
 
-export const apiAction = function (params) {
+export const apiAction = function (params: Record<string, any>): Promise<any> {
   return new Promise((resolve, reject) => {
     request(`https://freecurrencyrates.com/api/action.php?${qs(params)}`, {
       method: 'GET',

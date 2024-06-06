@@ -1,7 +1,7 @@
 import { message } from 'antd';
-
+import { apiAction } from '@/request';
 function request(params: any) {
-  return (window as any).apiAction({ ...params, ln: 'zh-hans' });
+  return apiAction({ ...params, ln: 'zh-hans' });
 }
 
 export const getSource = function () {

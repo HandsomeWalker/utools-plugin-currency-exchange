@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { getRateScript } from '@/request';
 
 interface UseRateScriptProps {
   onSuccess?: (price: any) => void;
@@ -21,7 +22,7 @@ function useRateScript(config: UseRateScriptProps): UseRateScriptReturnProps {
     async function asyncFunc() {
       setLoading(true);
       try {
-        const data = await (window as any).getRateScript();
+        const data = await getRateScript();
         eval(data);
         const price = (window as any).prize;
         onSuccess && onSuccess(price);
