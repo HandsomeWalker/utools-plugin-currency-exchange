@@ -2,9 +2,8 @@
   "private": true,
   "scripts": {
     "start": "umi dev",
-    "build": "umi build & yarn copy",
+    "build": "umi build",
     "build:analyze": "cross-env ANALYZE=1 umi build",
-    "copy": "node scripts/copyFile.js",
     "postinstall": "umi generate tmp",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
     "test": "umi-test",

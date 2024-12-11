@@ -9,7 +9,8 @@ interface FnDialogProps extends ModalStaticFunctions {
 export const getIconClassName = function (value: string, size: number): string {
   for (const item of iso) {
     if (value === item.iso + ':CUR' || value === item.iso) {
-      return `icon-${size}-${item.flag.replace(/\.png/g, '')}`;
+      const flag = item.flag.replace(/\.png/g, '');
+      return `icon-${size}-${flag === 'tw' ? 'cn' : flag}`;
     }
   }
   return '';

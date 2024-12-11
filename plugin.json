@@ -2,13 +2,9 @@
   "pluginName": "汇率换算",
   "description": "😊简单易用👍提供丰富的货币转换✨可拖拽排序👀支持暗黑模式💖enjoy💖",
   "author": "HandsomeWalker",
-  "development": {
-    "main": "http://localhost:8000"
-  },
   "main": "index.html",
-  "version": "1.0.3",
+  "version": "2.0.1",
   "logo": "logo.png",
-  "preload": "preload.js",
   "features": [
     {
       "code": "hl",

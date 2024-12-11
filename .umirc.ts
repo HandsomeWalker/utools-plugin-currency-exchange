@@ -9,10 +9,11 @@ export default defineConfig({
   mpa: {},
   ignoreMomentLocale: true,
   targets: {
-    chrome: 98,
+    chrome: 108,
     firefox: false,
     safari: false,
     edge: false,
     ios: false,
   },
+  copy: ['src/styles/antd.dark.min.css', 'plugin.json', 'logo.png'],
 });
