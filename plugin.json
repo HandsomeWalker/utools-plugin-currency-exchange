@@ -3,7 +3,10 @@
   "description": "😊简单易用👍提供丰富的货币转换✨可拖拽排序👀支持暗黑模式💖enjoy💖",
   "author": "HandsomeWalker",
   "main": "index.html",
-  "version": "2.0.1",
+  "development": {
+    "main": "http://localhost:8000"
+  },
+  "version": "2.0.2",
   "logo": "logo.png",
   "features": [
     {
