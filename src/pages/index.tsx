@@ -39,7 +39,7 @@ interface ListItemProps {
 }
 
 export default function IndexPage() {
-  const [fastPayload, setFastPaload] = useState<any>(0);
+  const [fastPayload, setFastPayload] = useState<any>(0);
   const [currSelect, setCurrSelect] = useState<ListItemProps>({
     title: '人民币(CNY)',
     iso: 'CNY',
@@ -116,7 +116,7 @@ export default function IndexPage() {
         darkLink?.remove();
       }
       if (code === 'fast') {
-        setFastPaload(payload);
+        setFastPayload(payload?.replace(/(,|，)/g, ''));
       }
       run();
     });
@@ -136,7 +136,7 @@ export default function IndexPage() {
         }
       }
       dispatchList({ type: 'update', payload: temp });
-      setFastPaload(0);
+      setFastPayload(0);
     },
     [fixCount],
   );
